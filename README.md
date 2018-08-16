@@ -1,6 +1,7 @@
 # MetastaticCancerECMRemodelingCC3D
 Hybrid discrete-continuum model of ECM remodeling and its impact on metastatic cancer migration
 
+[![DOI](https://zenodo.org/badge/145025121.svg)](https://zenodo.org/badge/latestdoi/145025121)
 
 ## Overview
 This computational model describes the dynamic process of extracellular matrix remodeling in the vicinity of a primary tumor at the onset 
