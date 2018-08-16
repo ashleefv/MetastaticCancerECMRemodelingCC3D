@@ -10,13 +10,13 @@ and two enzymes that react to remodel the microenvironment, impacting cancer cel
 
 ## Computational Model for Metastatic Cancer Migration through a Remodeling Extracellular Matrix
 ### Code Authors
-Yen T. Nguyen Edalgo, Anya L. Zornes, Ashlee N. Ford Versypt, 
+Yen T. Nguyen Edalgo and Ashlee N. Ford Versypt, 
 School of Chemical Engineering,
 Oklahoma State University.
 Corresponding author: A. N. Ford Versypt, ashleefv@okstate.edu
 
 ### Related publication for model details
-Yen T. Nguyen Edalgo, Anya L. Zornes, Ashlee N. Ford Versypt, A Hybrid Discrete-Continuous Model of Metastatic Cancer Cell Migration through a Remodelling Extracellular Matrix,
+Yen T. Nguyen Edalgo, Anya L. Zornes, and Ashlee N. Ford Versypt, A Hybrid Discrete-Continuous Model of Metastatic Cancer Cell Migration through a Remodelling Extracellular Matrix,
 Submitted to Journal of the Royal Society Interface, 2018.
 
 ### Files
