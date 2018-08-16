@@ -21,7 +21,9 @@ Submitted to Journal of the Royal Society Interface, 2018.
 ### Files
 
 * HaptotaxisTest2D.cc3d
+
 This file includes the nominal case for running the model.
 
 * Simulation folder
+
 This folder includes the python, python steppables, and xml files that can be used to customize settings in the code for each simulation.
