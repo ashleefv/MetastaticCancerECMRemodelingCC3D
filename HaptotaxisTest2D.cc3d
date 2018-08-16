@@ -1,0 +1,5 @@
+<Simulation version="3.6.2">
+   <XMLScript Type="XMLScript">Simulation/HaptotaxisTest2D.xml</XMLScript>
+   <PythonScript Type="PythonScript">Simulation/HaptotaxisTest2D.py</PythonScript>
+   <Resource Type="Python">Simulation/HaptotaxisTest2DSteppables.py</Resource>
+</Simulation>

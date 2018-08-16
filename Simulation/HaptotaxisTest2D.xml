@@ -1,0 +1,207 @@
+<CompuCell3D Revision="20171121" Version="3.7.7">
+   
+   <Potts>
+      
+      <!-- Basic properties of CPM (GGH) algorithm -->
+      <Dimensions x="300" y="300" z="1"/>
+      <Steps>30001</Steps>
+      <Temperature>50.0</Temperature>
+      <NeighborOrder>2</NeighborOrder>
+      <LatticeType>Square</LatticeType>
+      
+   </Potts>
+   
+   <Plugin Name="CellType">
+      
+      <!-- Listing all cell types in the simulation -->
+      <CellType TypeId="0" TypeName="Medium"/>
+      <CellType TypeId="1" TypeName="cell"/>
+   </Plugin>
+   
+   <Plugin Name="Volume">
+      <VolumeEnergyParameters CellType="cell" LambdaVolume="1.0" TargetVolume="100"/>
+   </Plugin>
+   
+   <Plugin Name="CenterOfMass">
+      <!-- Module tracking center of mass of each cell -->
+   </Plugin>
+   
+   <Plugin Name="PixelTracker">  
+        <!-- Module tracking pixels of each cell -->
+    </Plugin>
+
+   
+   <Plugin Name="Contact">
+      <!-- Specification of adhesion energies -->
+      <Energy Type1="Medium" Type2="Medium">0.0</Energy>
+      <Energy Type1="Medium" Type2="cell">32.0</Energy>
+      <Energy Type1="cell" Type2="cell">40.0</Energy>
+      <NeighborOrder>2</NeighborOrder>
+   </Plugin>
+   
+  <!--Plugin Name="Secretion">   
+       <Field Name="LOX">
+       </Field>
+       
+        <Field Name="MMP">
+        </Field> 
+    </Plugin--> 
+     
+   <Plugin Name="Chemotaxis"> 
+      
+      <!-- You may repeat ChemicalField element for each chemical field declared in the PDE solvers -->
+      <!-- Specification of chemotaxis properties of select cell types. -->
+      <ChemicalField Name="fiber" Source="ReactionDiffusionSolverFE">
+         <ChemotaxisByType Lambda="500.0" Type="cell"/>  
+      </ChemicalField>
+      
+      <ChemicalField Name="fiber_cl" Source="ReactionDiffusionSolverFE">
+         <ChemotaxisByType Lambda="1000.0" Type="cell"/>  
+      </ChemicalField>
+   </Plugin>
+      
+   <Steppable Type="ReactionDiffusionSolverFE">
+       <!--AutoscaleDiffusion/-->
+      <!-- Specification of PDE solvers -->
+      <DiffusionField Name="fiber">
+         <!--AutoscaleDiffusion/-->
+         <DiffusionData>
+            <FieldName>fiber</FieldName>
+            <DiffusionConstant>0</DiffusionConstant>       
+            <ExtraTimesPerMCS>175</ExtraTimesPerMCS>  
+            <AdditionalTerm>-7.50E-03*MMP*fiber-1.35E-02*LOX*fiber+1.13E-04*(1- fiber-fiber_cl-(CellType==1 ? 1: 0))</AdditionalTerm>
+     
+            <!-- Additional options are: -->
+            <!--<DoNotDiffuseTo>cell</DoNotDiffuseTo>-->
+            <!--<DoNotDecayIn>Medium</DoNotDecayIn> -->
+            <!--<InitialConcentrationExpression>1*1</InitialConcentrationExpression> -->
+            <!-- <ConcentrationFileName>INITIAL CONCENTRATION FIELD - typically a file with path Simulation/NAME_OF_THE_FILE.txt</ConcentrationFileName> -->
+            <!-- To run solver for large diffusion constants you typically call solver multiple times - ExtraTimesPerMCS to specify additional calls to the solver in each MCS  -->
+            <!-- IMPORTANT: make sure not to mix this setting with the PDESolverCaller module! See manual for more information -->
+            <!-- <ExtraTimesPerMCS>0</ExtraTimesPerMCS> -->
+            <!-- <DeltaX>1.0</DeltaX> -->
+            <!-- <DeltaT>1.0</DeltaT> -->
+         </DiffusionData>
+         
+         <BoundaryConditions>
+            <Plane Axis="X">
+               <ConstantValue PlanePosition="Min" Value="1.0"/>
+               <ConstantValue PlanePosition="Max" Value="1.0"/>
+               <!-- Other options are (examples): -->
+               <!-- <Periodic/> -->
+               <!-- <ConstantDerivative PlanePosition="Min" Value="10.0"/> -->
+            </Plane>
+            <Plane Axis="Y">
+               <ConstantValue PlanePosition="Min" Value="1.0"/>
+               <ConstantValue PlanePosition="Max" Value="1.0"/>
+               <!-- Other options are (examples): -->
+               <!-- <Periodic/> -->
+               <!-- <ConstantValue PlanePosition="Min" Value="10.0"/> -->
+            </Plane>
+         </BoundaryConditions>
+         
+      </DiffusionField>
+      
+      <DiffusionField Name="fiber_cl">
+         <DiffusionData>
+            <FieldName>fiber_cl</FieldName>
+            <DiffusionConstant>0</DiffusionConstant>
+            <DecayConstant>0</DecayConstant>
+            <ExtraTimesPerMCS>175</ExtraTimesPerMCS>
+            <AdditionalTerm>-7.50E-03*MMP*fiber_cl+1.35E-02*LOX*fiber</AdditionalTerm>
+         </DiffusionData>
+              
+         <BoundaryConditions>
+            <Plane Axis="X">
+               <ConstantValue PlanePosition="Min" Value="0.0"/>
+               <ConstantValue PlanePosition="Max" Value="0.0"/>
+            </Plane>
+            <Plane Axis="Y">
+               <ConstantValue PlanePosition="Min" Value="0.0"/>
+               <ConstantValue PlanePosition="Max" Value="0.0"/>
+            </Plane>
+         </BoundaryConditions>
+      </DiffusionField>
+      
+      <DiffusionField Name="MMP">
+         <DiffusionData>
+            <FieldName>MMP</FieldName>
+            <DiffusionConstant>21.6</DiffusionConstant>
+            <!--DecayConstant>1.56*10^(-6)</DecayConstant-->
+            <ExtraTimesPerMCS>175</ExtraTimesPerMCS>
+            <AdditionalTerm>-7.50E-07*MMP+(CellType==1 ? 7.50E-05: 0)</AdditionalTerm>
+         </DiffusionData>
+         
+         <!--<SecretionData>
+            <Secretion Type="cell">0.1</Secretion>
+            <SecretionOnContact SecreteOnContactWith="Medium" Type="cell">1</SecretionOnContact>
+            <ConstantConcentration Type="cell">0.5</ConstantConcentration>
+         </SecretionData>-->
+                     
+         <BoundaryConditions>
+            <Plane Axis="X">
+               <ConstantValue PlanePosition="Min" Value="0.0"/>
+               <ConstantValue PlanePosition="Max" Value="0.0"/>
+            </Plane>
+            <Plane Axis="Y">
+               <ConstantValue PlanePosition="Min" Value="0.0"/>
+               <ConstantValue PlanePosition="Max" Value="0.0"/>
+            </Plane>
+         </BoundaryConditions>
+      </DiffusionField>
+      
+      <DiffusionField Name="LOX">
+         <DiffusionData>
+            <FieldName>LOX</FieldName>
+            <DiffusionConstant>43.2</DiffusionConstant>
+            <ExtraTimesPerMCS>175</ExtraTimesPerMCS>
+            <!--DecayConstant>1.56*10^(-6)</DecayConstant-->
+            <AdditionalTerm>-7.50E-07*LOX+(CellType==1 ? 7.50E-05: 0)</AdditionalTerm>
+         </DiffusionData>
+         
+         <!--<SecretionData>
+            <Secretion Type="cell">0.1</Secretion>
+            <SecretionOnContact SecreteOnContactWith="Medium" Type="cell">1</SecretionOnContact>
+            <ConstantConcentration Type="cell">0.5</ConstantConcentration>
+         </SecretionData>  -->
+
+              
+         <BoundaryConditions>
+            <Plane Axis="X">
+               <ConstantValue PlanePosition="Min" Value="0.0"/>
+               <ConstantValue PlanePosition="Max" Value="0.0"/>
+            </Plane>
+            <Plane Axis="Y">
+               <ConstantValue PlanePosition="Min" Value="0.0"/>
+               <ConstantValue PlanePosition="Max" Value="0.0"/>
+            </Plane>
+         </BoundaryConditions>
+      </DiffusionField>
+      
+      
+   </Steppable>
+   
+   <!--Steppable Type="UniformInitializer">
+      <Region>
+         <BoxMin x="0" y="0" z="0"/>
+         <BoxMax x="20" y="100" z="1"/>
+         <Gap>0</Gap>
+         <Width>10</Width>
+         <Types>cell</Types>
+      </Region>
+      
+    </Steppable-->  
+    
+    <Steppable Type="BlobInitializer">
+        <Region>
+            <Gap>0</Gap>
+            <Width>10</Width>
+            <Radius>50</Radius>
+            <Center x="150" y="150" z="0"/>
+            <Types>cell</Types>
+        </Region>
+    </Steppable>
+      
+    
+   
+</CompuCell3D>
