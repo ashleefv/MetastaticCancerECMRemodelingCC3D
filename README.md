@@ -29,6 +29,9 @@ This file includes the nominal case for running the model.
 
 This folder includes the python, python steppables, and xml files that can be used to customize settings in the code for each simulation.
 
+* Simulation/HaptotaxisTest2D.py
+This script has sections that can be uncommented to run the corresponding case described in the manuscript.
+
 ### Notes on generating figures
 
 The figures in the manuscript were manually pieced together by collecting a series of output from each run. All of the simulations can be run from the codes provided.
