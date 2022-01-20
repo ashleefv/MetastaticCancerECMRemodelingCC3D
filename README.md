@@ -16,8 +16,7 @@ Oklahoma State University.
 Corresponding author: A. N. Ford Versypt, ashleefv@okstate.edu
 
 ### Related publication for model details
-Yen T. Nguyen Edalgo, Anya L. Zornes, and Ashlee N. Ford Versypt, A Hybrid Discrete-Continuous Model of Metastatic Cancer Cell Migration through a Remodeling Extracellular Matrix,
-Under review, AIChE Journal, 2019.
+Yen T. Nguyen Edalgo, Anya L. Zornes, and Ashlee N. Ford Versypt, A Hybrid Discrete-Continuous Model of Metastatic Cancer Cell Migration through a Remodeling Extracellular Matrix, AIChE Journal, 65(9), e16671, 2019. [DOI: 10.1002/aic.16671](https://doi.org/10.1002/aic.16671).
 
 ### Files
 
